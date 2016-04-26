@@ -100,8 +100,8 @@ module.exports = function(conf) {
                     handle("SEARCH_RESULTS", processResults(callback))));
         },
 
-        urlSimilar: function(url, callback) {
-            request.get(url)
+        urlSimilar: function(thisUrl, callback) {
+            request.get(thisUrl)
                 .pipe(request.post(url + "searcher",
                     handle("SEARCH_RESULTS", processResults(callback))));
         },
@@ -117,7 +117,13 @@ module.exports = function(conf) {
                 .pipe(request.put(url + "images/" + id,
                     handle("IMAGE_ADDED", callback)));
         },
-
+        
+        addURL: function(thisURL, id, callback) {
+            request.get(thisURL)
+                .pipe(request.put(url + "images/" + id,
+                    handle("IMAGE_ADDED", callback)));
+        },
+        
         saveIndex: function(indexFile, callback) {
             request.post({
                 url: url + "io",
